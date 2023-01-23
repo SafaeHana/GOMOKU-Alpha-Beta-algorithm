@@ -1,4 +1,4 @@
-# GOMOKU-java
+# GOMOKU-java:
 
 Gomoku is a two-player strategy game played on a grid. The objective of the game is to get five of your pieces in a row (horizontally, vertically, or diagonally) before your opponent does.
 
