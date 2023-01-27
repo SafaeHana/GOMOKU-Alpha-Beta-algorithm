@@ -6,7 +6,7 @@ Gomoku is a two-player strategy game played on a grid. The objective of the game
 
 - Home vs Home: This allows two players to play the game against each other on the same device.
 - Home vs Machine: This allows a player to play against an AI opponent.
-- Hint: This feature provides a suggestion for the player's next move.
+- Hint: This feature provides a suggestion for the player's next move
 - Depth of Difficulty: This allows the player to adjust the difficulty of the game by changing the depth of the AI's search tree.
 
 ## Getting Started
