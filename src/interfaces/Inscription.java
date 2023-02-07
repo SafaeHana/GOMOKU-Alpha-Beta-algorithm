@@ -32,7 +32,7 @@ public class Inscription extends javax.swing.JFrame {
         this.errorLbl.setVisible(false);
         
         
-        //--------- Se connecter Ã  la BDD 
+        //--------- Se connecter à la BDD 
         connection = ConnectionManager.getConnection();
     
         
@@ -92,13 +92,22 @@ public class Inscription extends javax.swing.JFrame {
         titleLbl.setText("creez votre compte !");
         contentPane.add(titleLbl, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 10, 370, 50));
 
+        nomTxt.setBackground(new java.awt.Color(250, 249, 241));
+        nomTxt.setFont(new java.awt.Font("Rockwell", 1, 14)); // NOI18N
+        nomTxt.setHorizontalAlignment(javax.swing.JTextField.LEFT);
+        contentPane.add(nomTxt, new org.netbeans.lib.awtextra.AbsoluteConstraints(224, 70, 250, 41));
+        
+        nomLbl.setFont(new java.awt.Font("Rockwell", 1, 18)); // NOI18N
+        nomLbl.setText("Nom :");
+        contentPane.add(nomLbl, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 70, 127, 41));
+
         emailLbl.setFont(new java.awt.Font("Rockwell", 1, 18)); // NOI18N
         emailLbl.setText("E-mail :");
-        contentPane.add(emailLbl, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 130, 127, 41));
+        contentPane.add(emailLbl, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 140, 127, 41));
 
         passwordLbl.setFont(new java.awt.Font("Rockwell", 1, 18)); // NOI18N
         passwordLbl.setText("Mot de passe :");
-        contentPane.add(passwordLbl, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 190, -1, 42));
+        contentPane.add(passwordLbl, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 210, -1, 41));
 
         emailTxt.setBackground(new java.awt.Color(250, 249, 241));
         emailTxt.setFont(new java.awt.Font("Rockwell", 1, 14)); // NOI18N
@@ -110,15 +119,6 @@ public class Inscription extends javax.swing.JFrame {
         passwordTxt.setFont(new java.awt.Font("Rockwell", 1, 14)); // NOI18N
         passwordTxt.setHorizontalAlignment(javax.swing.JTextField.LEFT);
         contentPane.add(passwordTxt, new org.netbeans.lib.awtextra.AbsoluteConstraints(224, 210, 250, 42));
-
-        nomTxt.setBackground(new java.awt.Color(250, 249, 241));
-        nomTxt.setFont(new java.awt.Font("Rockwell", 1, 14)); // NOI18N
-        nomTxt.setHorizontalAlignment(javax.swing.JTextField.LEFT);
-        contentPane.add(nomTxt, new org.netbeans.lib.awtextra.AbsoluteConstraints(224, 70, 250, 41));
-
-        nomLbl.setFont(new java.awt.Font("Rockwell", 1, 18)); // NOI18N
-        nomLbl.setText("Nom :");
-        contentPane.add(nomLbl, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 70, 127, 41));
 
         inscriptionBtn.setBackground(new java.awt.Color(128, 100, 131));
         inscriptionBtn.setFont(new java.awt.Font("Rockwell", 1, 14)); // NOI18N

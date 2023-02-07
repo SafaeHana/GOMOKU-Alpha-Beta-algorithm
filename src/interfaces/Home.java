@@ -2,8 +2,10 @@ package interfaces;
 
 import Tools.ConnectionManager;
 import Tools.GomokuPosition;
+import Tools.HelpGomoku;
 import Tools.Outils;
-import Tools.PlayGomoku;
+import Tools.PlayGomoku1;
+import Tools.PlayGomoku2;
 import java.awt.Dimension;
 import java.awt.Image;
 import java.awt.Toolkit;
@@ -14,6 +16,7 @@ import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import javax.swing.JTextField;
 
 
 public class Home extends javax.swing.JFrame {
@@ -65,10 +68,7 @@ public class Home extends javax.swing.JFrame {
         boardPane.add(board);
         boardPane.repaint();
         
-        /***********************************************************************
-         * La requete de selection l'id et l'etat d'une partie, un etat signifie
-         * si la partie est terminée ou non
-         * ********************************************************************/
+        //La requete de selection l'id d'une ancienne partie 
         String qry = "select idPosition, etatPosition from position where idUser = ?";
         this.ps = this.connection.prepareStatement(qry);
         this.ps.setInt(1, this.idUser);
@@ -76,7 +76,8 @@ public class Home extends javax.swing.JFrame {
         
         while(this.rs.next())
         {
-            this.positionUserCB.addItem(String.valueOf(this.rs.getInt(1)) + "  " + String.valueOf(this.rs.getInt(2) == 0 ? "Non" : "Oui"));
+        	//this.positionUserCB.addItem(String.valueOf(this.rs.getInt(1)) + "  ");
+            this.positionUserCB.addItem(String.valueOf(this.rs.getInt(1)) + " ème partie");
         }
         
         if(this.positionUserCB.getItemCount() != 0)
@@ -111,7 +112,6 @@ public class Home extends javax.swing.JFrame {
      */
     @SuppressWarnings("unchecked")
     private void initComponents() {
-
         contentPane = new javax.swing.JPanel();
         boardPane = new javax.swing.JPanel();
         exit = new javax.swing.JButton();
@@ -126,9 +126,6 @@ public class Home extends javax.swing.JFrame {
         blancTxt = new javax.swing.JTextField();
         blancLbl = new javax.swing.JLabel();
         noirLbl = new javax.swing.JLabel();
-        timerLbl = new javax.swing.JLabel();
-        second = new javax.swing.JLabel();
-        millisecond = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
@@ -138,8 +135,8 @@ public class Home extends javax.swing.JFrame {
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         resultValueLbl1 = new javax.swing.JLabel();
-        undoBtn = new javax.swing.JButton();
         noirLbl1 = new javax.swing.JLabel();
+        helpbtn =new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Home");
@@ -164,7 +161,6 @@ public class Home extends javax.swing.JFrame {
             boardPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 400, Short.MAX_VALUE)
         );
-
         contentPane.add(boardPane, new org.netbeans.lib.awtextra.AbsoluteConstraints(19, 6, -1, -1));
 
         exit.setBackground(new java.awt.Color(128, 100, 131));
@@ -192,20 +188,22 @@ public class Home extends javax.swing.JFrame {
                 deconnexionBtnActionPerformed(evt);
             }
         });
-          contentPane.add(deconnexionBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 340, 162, 30));
+        contentPane.add(deconnexionBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 340, 162, 30));
+         
+        //----les anciennes parties
+        contentPane.add(positionUserCB, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 110, 164, 30));
 
-        contentPane.add(positionUserCB, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 80, 123, 27));
-
+        
         playPositionBtn.setBackground(new java.awt.Color(128, 100, 131));
         playPositionBtn.setFont(new java.awt.Font("Rockwell", 1, 14)); // NOI18N
         playPositionBtn.setForeground(new java.awt.Color(0, 0, 0));
-        playPositionBtn.setText("Jouer");
+        playPositionBtn.setText("Voir A.partie !");
         playPositionBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 playPositionBtnActionPerformed(evt);
             }
         });
-       contentPane.add(playPositionBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 80, 77, -1));
+        contentPane.add(playPositionBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 140, 164, 30));
 
         saveBtn.setBackground(new java.awt.Color(128, 100, 131));
         saveBtn.setFont(new java.awt.Font("Rockwell", 1, 14)); // NOI18N
@@ -216,7 +214,20 @@ public class Home extends javax.swing.JFrame {
                 saveBtnActionPerformed(evt);
             }
         });
-        contentPane.add(saveBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 300, 164, 30));
+        contentPane.add(saveBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 300, 164, 26));
+        
+        helpbtn.setBackground(new java.awt.Color(128, 100, 131));
+        helpbtn.setFont(new java.awt.Font("Rockwell", 1, 14)); // NOI18N
+        helpbtn.setForeground(new java.awt.Color(0, 0, 0));
+        helpbtn.setText("Aide: 3");
+        helpbtn.addActionListener(new java.awt.event.ActionListener() {
+        	public void actionPerformed(java.awt.event.ActionEvent evt) {
+                helpBtnActionPerformed(evt);
+            }
+        
+        }); 
+        contentPane.add(helpbtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 220, 164, 30));
+
 
         hommeMachineCB.setBackground(new java.awt.Color(243, 241, 199));
         hommeMachineCB.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Homme/Machine", "Homme/Homme" }));
@@ -233,23 +244,9 @@ public class Home extends javax.swing.JFrame {
         });
         contentPane.add(playNewBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 260, 164, 30));
 
-        noirTxt.setEditable(false);
-        noirTxt.setBackground(new java.awt.Color(255, 255, 255));
-        noirTxt.setText("0");
-        contentPane.add(noirTxt, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 150, 50, -1));
-
-        blancTxt.setEditable(false);
-        blancTxt.setBackground(new java.awt.Color(255, 255, 255));
-        blancTxt.setText("0");
-        contentPane.add(blancTxt, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 120, 50, -1));
-
-        blancLbl.setFont(new java.awt.Font("Rockwell", 1, 14)); // NOI18N
-        blancLbl.setText("Blanc :");
-        contentPane.add(blancLbl, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 120, 70, 20));
-
         jLabel1.setFont(new java.awt.Font("Rockwell", 1, 14)); // NOI18N
-        jLabel1.setText("Niveau");
-        contentPane.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 40, -1, -1));
+        jLabel1.setText("Niveau :");
+        contentPane.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 45, -1, -1));
 
         jLabel2.setFont(new java.awt.Font("Rockwell", 1, 14)); // NOI18N
         jLabel2.setText("Joueur :");
@@ -265,10 +262,6 @@ public class Home extends javax.swing.JFrame {
         resultValueLbl1.setFont(new java.awt.Font("Rockwell", 0, 14)); // NOI18N
         contentPane.add(resultValueLbl1, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 420, 200, 40));
 
-        noirLbl1.setFont(new java.awt.Font("Rockwell", 1, 14)); // NOI18N
-        noirLbl1.setText("Noir :");
-        contentPane.add(noirLbl1, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 150, 70, 20));
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -283,10 +276,19 @@ public class Home extends javax.swing.JFrame {
         pack();
     }
 
-    //------ Methode Play() -------
-    private void play() {
-        
-        new Thread(new PlayGomoku()).start();
+    //------ Methode PlayerToMachine() -------
+    private void playerToMachine() {   
+        new Thread(new PlayGomoku1()).start();
+    }
+    
+    //------ Methode playerToPlayer() -------
+    private void playerToPlayer() {
+    	 new Thread(new PlayGomoku2()).start();
+    }
+    
+    //------ Methode Help() -------
+    private void help() {   
+        new Thread(new HelpGomoku()).start();
     }
     
     //-------- Button :  Quitter --------
@@ -313,7 +315,7 @@ public class Home extends javax.swing.JFrame {
         }
     }
    
-     //--------- Button : jouer une ancienne partie ----------
+    //--------- Button : jouer une ancienne partie ----------
     private void playPositionBtnActionPerformed(java.awt.event.ActionEvent evt) {
 
         resultValueLbl1.setText("en cours de jeu...");
@@ -348,7 +350,7 @@ public class Home extends javax.swing.JFrame {
             p.setBoard(brd);
             Outils.position = p;
 
-            play();
+            playerToMachine();
                
             } catch (SQLException ex) {
                 Logger.getLogger(Home.class.getName()).log(Level.SEVERE, null, ex);
@@ -356,6 +358,25 @@ public class Home extends javax.swing.JFrame {
     }
 
     
+    //----------le nombre d'aides possibles
+    private int totalHelp=0;
+    
+    //----------- Button : Aide --------
+    private void helpBtnActionPerformed(java.awt.event.ActionEvent evt) {
+    	
+    	
+    	if (totalHelp++<3 ) {
+			int t=3-totalHelp;
+			helpbtn.setText("Aide: "+t);
+			
+	    			 help();	   
+		}else {
+			JOptionPane.showMessageDialog(null, "vous avez depasser 3 aides !!");
+		}
+    	
+    	
+    }
+
     //----------- Button : Enregistrer --------
     private void saveBtnActionPerformed(java.awt.event.ActionEvent evt) {
         
@@ -411,7 +432,8 @@ public class Home extends javax.swing.JFrame {
             this.rs = this.ps.executeQuery();
             while(this.rs.next())
             {
-                this.positionUserCB.addItem(String.valueOf(this.rs.getInt(1)) + "  " + String.valueOf(this.rs.getInt(2) == 0 ? "Non" : "Oui"));
+                this.positionUserCB.addItem(String.valueOf(this.rs.getInt(1)) + "  " 
+                    + String.valueOf(this.rs.getInt(2) == 0 ? "Non" : "Oui"));
             }
             if(this.positionUserCB.getItemCount() != 0)
                 playPositionBtn.setEnabled(true);
@@ -422,36 +444,37 @@ public class Home extends javax.swing.JFrame {
         }
     }
 
-    
     //----------- Button : Nouvelle partie --------
     private void playNewBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_playNewBtnActionPerformed
-        idPartie = 0;
+    	idPartie = 0;
         Outils.gameOver = false;
         resultValueLbl1.setText("en cours de jeu...");
         saveBtn.setEnabled(true);
         int indexDepth = this.depthCB.getSelectedIndex();
+        //-------selectionner niveau--------
         switch(indexDepth) {
             case 0: // Facile
-                Outils.depth = 0;
+                Outils.depth = 1;
                 break;
             case 1: // Moyen
-                Outils.depth = 5;
+                Outils.depth = 2;
                 break;
             case 2: // Difficile
-                Outils.depth = 8;
+                Outils.depth = 3;
                 break;
         }
-        
         GomokuPosition p = new GomokuPosition();
         Outils.position = p;
-
-        play();
-    }
-
-    private void undoBtnActionPerformed(java.awt.event.ActionEvent evt) {
-        Outils.position = Outils.lastPosition;
-        play();
-        
+        //-------selectionner joueur--------
+        int indexPlayer = this.hommeMachineCB.getSelectedIndex();
+        switch(indexPlayer) {
+            case 0: //---Homme&&Machine
+            	playerToMachine();
+                break;
+            case 1: //---Homme&&Homme
+                playerToPlayer();
+                break;
+        }
     }
     
     /**
@@ -474,7 +497,6 @@ public class Home extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
-    public static javax.swing.JLabel millisecond;
     private javax.swing.JLabel noirLbl;
     private javax.swing.JLabel noirLbl1;
     public static javax.swing.JTextField noirTxt;
@@ -484,8 +506,6 @@ public class Home extends javax.swing.JFrame {
     private javax.swing.JLabel resultValueLbl;
     public static javax.swing.JLabel resultValueLbl1;
     public static javax.swing.JButton saveBtn;
-    public static javax.swing.JLabel second;
-    private javax.swing.JLabel timerLbl;
-    private javax.swing.JButton undoBtn;
+    private javax.swing.JButton helpbtn;
     // End of variables declaration//GEN-END:variables
 }
