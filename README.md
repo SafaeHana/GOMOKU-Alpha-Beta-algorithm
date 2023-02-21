@@ -3,7 +3,7 @@
 Gomoku is a two-player strategy game played on a grid. The objective of the game is to get five of your pieces in a row (horizontally, vertically, or diagonally) before your opponent does.
 ## it's developed using the AI algorithm of : Alfa-Beta 
 
-## Features
+## Features:
 
 - Home vs Home: This allows two players to play the game against each other on the same device.
 - Home vs Machine: This allows a player to play against an AI opponent.
