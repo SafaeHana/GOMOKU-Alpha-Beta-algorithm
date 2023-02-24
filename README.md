@@ -1,4 +1,4 @@
-# GOMOKU with Alfa-Beta AI Algorithm
+# GOMOKU with Alfa-Beta AI Algorithm:
 
 Gomoku is a two-player strategy game played on a grid. The objective of the game is to get five of your pieces in a row (horizontally, vertically, or diagonally) before your opponent does.
 ## it's developed using the AI algorithm of : Alfa-Beta 
